@@ -6,7 +6,7 @@
 [![arXiv article](xxx)](xxx)
 -->
 
-[![Documentation, Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://paschermayr.github.io/BaytesInference.jl/stable/)
+[![Documentation, Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://paschermayr.github.io/BaytesInference.jl/)
 [![Build Status](https://github.com/paschermayr/BaytesInference.jl/actions/workflows/CI.yml/badge.svg?branch=master)](https://github.com/paschermayr/BaytesInference.jl/actions/workflows/CI.yml?query=branch%3Amaster)
 [![Coverage](https://codecov.io/gh/paschermayr/BaytesInference.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/paschermayr/BaytesInference.jl)
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
