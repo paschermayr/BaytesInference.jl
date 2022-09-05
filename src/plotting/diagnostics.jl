@@ -263,6 +263,7 @@ function plotDiagnostics(
     return plot_diagnostics
     =#
 end
+#=
 function plotDiagnostics(
     diagnosticsᵛ::Vector{Vector{M}},
     pmcmc::PMCMC;
@@ -289,7 +290,7 @@ function plotDiagnostics(
     )
     return plot(mcmc_plot, pf_plot; legend=false, layout=grid(2, 1; heights=[0.70, 0.30]))
 end
-
+=#
 ################################################################################
 function plotDiagnostics(
     diagnosticsᵛ::Vector{M},

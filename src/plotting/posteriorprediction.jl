@@ -157,8 +157,8 @@ function plotPosteriorPrediction(
     ## Return Plot
     return plot_obs
 end
-
 ################################################################################
+#=
 function plotPosteriorPrediction(
     diagnosticsᵛ::Vector{Vector{M}},
     pmcmc::PMCMC;
@@ -195,6 +195,7 @@ function plotPosteriorPrediction(
         layout=grid(2, 1; heights=[0.80, 0.20]),
     )
 end
+=#
 ################################################################################
 function plotPosteriorPrediction(
     diagnosticsᵛ::Vector{M},

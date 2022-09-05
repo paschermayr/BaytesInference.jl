@@ -30,7 +30,7 @@ function compute_escore(prediction::Vector{Vector{R}}, dataₜ::T) where {R,T}
     return escore
 end
 
-function compute_escore(predictionᵛ::Vector{Vector{T}}, data::D; burnin=0) where {T,D}
+function compute_escore(predictionᵛ::Vector{Vector{T}}, data::D, burnin=0) where {T,D}
     ## Initiate container
     dataconfig = BaytesCore.ArrayConfig(data)
     #!NOTE: +2 because we start with ( size(latent, 1) - length(predictionᵛ) ) for warmup, then predict for +2 at +1 after warmup
@@ -80,11 +80,11 @@ function plot_escore(
         #Get data and skip latent prediction
         escore = compute_escore(
             [getfield.(predictions[iter], 2) for iter in eachindex(predictions)],
-            data;
-            burnin=burnin,
+            data,
+            burnin
         )
     elseif isa(smc, _IBIS)
-        escore = compute_escore(predictions, data; burnin=burnin)
+        escore = compute_escore(predictions, data, burnin)
     else
         return println("No escore available for given smc.kernel sampler")
     end
