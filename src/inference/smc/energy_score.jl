@@ -8,7 +8,7 @@ Compute escore of trace given data.
 ```
 
 """
-function compute_escore(prediction::Vector{R}, dataₜ::R) where {R<:Real}
+function _compute_escore(prediction::Vector{R}, dataₜ::R) where {R<:Real}
     escore = mean(abs(prediction[iter] - dataₜ) for iter in eachindex(prediction))
     escore -=
         1 / (2 * size(prediction, 1)^2) * sum(
@@ -17,7 +17,7 @@ function compute_escore(prediction::Vector{R}, dataₜ::R) where {R<:Real}
         )
     return escore
 end
-function compute_escore(prediction::Vector{Vector{R}}, dataₜ::T) where {R,T}
+function _compute_escore(prediction::Vector{Vector{R}}, dataₜ::T) where {R,T}
     #!NOTE: Euclidean Norm in >1D case, Square root of the sum of the squares
     escore = mean(
         sqrt(sum((prediction[iter] .- dataₜ) .^ 2)) for iter in eachindex(prediction)
@@ -44,7 +44,7 @@ function compute_escore(predictionᵛ::Vector{Vector{T}}, data::D, burnin=0) whe
         predictionₜ₊₁ = predictionᵛ[iter + burnin]
         ## 3 Calculate escores
         #escore[iter]     = compute_escore( predictionₜ₊₁, data[start_date + iter - 1] )
-        escore[iter] = compute_escore(
+        escore[iter] = _compute_escore(
             predictionₜ₊₁, BaytesFilters.grab(data, (start_date + iter - 1), dataconfig)
         )
     end
