@@ -42,7 +42,7 @@ function plotDiagnostics(
     ## Plot default
     plot_diagnostics = plot(;
         layout=(4, 1),
-        size=plot_default_size,
+        size=plotsize,
         legend=false,
         xguidefontsize=fontsize,
         yguidefontsize=fontsize,
@@ -96,7 +96,7 @@ function plotDiagnostics(
     ## Plot default
     plot_diagnostics = plot(;
         layout=(2, 1),
-        size=plot_default_size,
+        size=plotsize,
         legend=false,
         xguidefontsize=fontsize,
         yguidefontsize=fontsize,
@@ -134,7 +134,7 @@ function plotDiagnostics(
     ## Plot default
     plot_diagnostics = plot(;
         layout=(1, 1),
-        size=plot_default_size,
+        size=plotsize,
         foreground_color_legend = :transparent,
         background_color_legend = :transparent,
         legend=false,
@@ -164,7 +164,7 @@ function plotDiagnostics(
     ## Plot default
     plot_diagnostics = plot(;
         layout=(2, 1),
-        size=plot_default_size,
+        size=plotsize,
         foreground_color_legend = :transparent,
         background_color_legend = :transparent,
         legend=false,
@@ -228,7 +228,7 @@ function plotDiagnostics(
     ## Plot default
     plot_diagnostics = plot(;
         layout=(2, 1),
-        size=plot_default_size,
+        size=plotsize,
         foreground_color_legend = :transparent,
         background_color_legend = :transparent,
         legend=false,
@@ -292,6 +292,7 @@ function plotDiagnostics(
 end
 =#
 ################################################################################
+
 function plotDiagnostics(
     diagnosticsᵛ::Vector{M},
     smc;
@@ -312,7 +313,7 @@ function plotDiagnostics(
     ## Plot default
     plot_diagnostics = plot(;
         layout=(7, 1),
-        size=plot_default_size,
+        size=plotsize,
         foreground_color_legend = :transparent,
         background_color_legend = :transparent,
         legend=false,
@@ -389,27 +390,29 @@ function plotDiagnostics(
         subplot=3,
     )
     ## Plot number of jittersteps
-    Plots.scatter!(
-        rejuvenated_idx,
-        reduce(
-            hcat,
-            [
-                diagnosticsᵛ[rejuvenated][iter].jittersteps for
-                iter in Base.OneTo(sum(rejuvenated))
-            ],
-        )';
-    #    xaxis=false,
-        xticks=false,
-        xlims=(1,Niterations),
-        ylabel="Rej. steps",
-        color="black",
-        markerstrokewidth=0.0,
-        alpha=1.0,
-        shape=:o,
-        markerstrokecolor="grey",
-        markersize=2,
-        subplot=4,
-    )
+    if length(rejuvenated_idx) > 1
+        Plots.scatter!(
+            rejuvenated_idx,
+            reduce(
+                hcat,
+                [
+                    diagnosticsᵛ[rejuvenated][iter].jittersteps for
+                    iter in Base.OneTo(sum(rejuvenated))
+                ],
+            )';
+        #    xaxis=false,
+            xticks=false,
+            xlims=(1,Niterations),
+            ylabel="Rej. steps",
+            color="black",
+            markerstrokewidth=0.0,
+            alpha=1.0,
+            shape=:o,
+            markerstrokecolor="grey",
+            markersize=2,
+            subplot=4,
+        )
+
     #Plot average of theta correlation at each step
     Plots.scatter!(
         rejuvenated_idx,
@@ -429,6 +432,7 @@ function plotDiagnostics(
         markersize=2,
         subplot=4,
     )
+end
     ## Plot normalized ℓweights
     Plots.scatter!(
         exp.(
