@@ -14,7 +14,7 @@ end
 
 function plotChain(
     trace::Trace{C,A,B},
-    tagged::Tagged; 
+    tagged::Tagged;
     chains=Base.OneTo(length(trace.val)),  # Choose which chain to plot, by default all chains
      model=false,                          # If model <: AbstractModel given, plots true parameter
     burnin=0,
@@ -28,7 +28,7 @@ function plotChain(
         layout=(length(tagged.parameter), 1),
         foreground_color_legend = :transparent,
         background_color_legend = :transparent,
-        size=plot_default_size,
+        size=plotsize,
         legend=false,
         xguidefontsize=fontsize,
         yguidefontsize=fontsize,
