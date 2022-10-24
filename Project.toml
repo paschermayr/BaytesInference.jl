@@ -1,7 +1,7 @@
 name = "BaytesInference"
 uuid = "4ed8d1ce-aa1e-45bc-907d-4d37aaa2bb0b"
 authors = ["Patrick Aschermayr <p.aschermayr@gmail.com>"]
-version = "0.1.7"
+version = "0.1.8"
 
 [deps]
 ArgCheck = "dce04be8-c92d-5529-be00-80e4d2c0e197"
@@ -23,7 +23,7 @@ UnPack = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
 
 [compat]
 ArgCheck = "2"
-Baytes = "0.1"
+Baytes = "0.2"
 BaytesCore = "0.1"
 BaytesFilters = "0.2"
 BaytesMCMC = "0.2"

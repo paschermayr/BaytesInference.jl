@@ -41,7 +41,7 @@ function plot_cumℓincrement(
         layout=(2, 1),
         foreground_color_legend = :transparent,
         background_color_legend = :transparent,
-        size=plot_default_size,
+        size=plotsize,
         xguidefontsize=fontsize,
         yguidefontsize=fontsize,
         legendfontsize=fontsize,
@@ -51,10 +51,10 @@ function plot_cumℓincrement(
 #Plot cumulative log incremental likelihood over time for each model
     for iter in eachindex(cumℓincrement)
         plot!(dates, cumℓincrement[iter],
-        color = palette=Plots.palette(param_color, length(cumℓincrement)+1)[iter],
+        color=Plots.palette(param_color, length(cumℓincrement)+1)[iter],
         ylabel = "Cumulative incremental\n log marginal likelihood",
         legend=:topleft,
-        label=modelnames[iter],
+        label = string(modelnames[iter], ", final val: ", round( cumℓincrement[iter][end], digits=1)),
         subplot=1,
         )
     end
@@ -65,7 +65,7 @@ function plot_cumℓincrement(
             dates, ℓbayes[iter],
             label= modelnames[iter], legend=:topleft,
             ylabel= string("Cum. Log Bayes Factor \nDifference to ", modelnames[benchmarkmodel]),
-            color = palette=Plots.palette(param_color, length(cumℓincrement)+1)[iter],
+            color=Plots.palette(param_color, length(cumℓincrement)+1)[iter],
             subplot=2
         )
     end
