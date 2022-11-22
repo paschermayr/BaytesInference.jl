@@ -5,6 +5,7 @@ include("utility.jl")
 
 include("diagnostics.jl")
 include("chain.jl")
+include("chains.jl")
 include("latent.jl")
 include("posteriorprediction.jl")
 
