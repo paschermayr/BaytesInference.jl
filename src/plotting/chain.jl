@@ -144,7 +144,7 @@ function plotChain(
                     ## Posterior Mean
                     shape=:o,
                     markerstrokewidth=0.1,
-                    markersize=2,
+                    markersize=1,
                     ylabel=sym,
                     label="Posterior Mean, 95%CI",
                     #                palette = Plots.palette(param_color, _lengths[iter]),
