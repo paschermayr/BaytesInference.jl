@@ -35,7 +35,7 @@ function plotChains(
     _names = transform.paramnames
     ## Get Trace Values
     _vals = trace_to_3DArray(trace, transform)
-    _Nchains = size(_vals, 3)
+    _Nchains = size(_vals, 2)
     ## if model there, obtain true parameter
     if model != false
         θ_true = flatten(model, transform.tagged)
@@ -43,7 +43,7 @@ function plotChains(
     end
     ## Plot
     for iter in eachindex(_names)
-        plot!(view(_vals, :, iter, :),
+        plot!(view(_vals, :, :, iter),
             label = false,
             ylabel = _names[iter],
             palette = Plots.palette(param_color, _Nchains),
