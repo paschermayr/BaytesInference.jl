@@ -1,4 +1,18 @@
 ################################################################################
+"""
+$(SIGNATURES)
+Check log target estimate variance for a interval of different model parameter values.
+
+# Examples
+```julia
+```
+
+"""
+function filter_forward(objective::Objective)
+    return error("No analytical formula to compute log target density provided, dispatch filter_forward(myobjective) with return values a (matrix of state probabilities, logtargetdensity).")
+end
+
+################################################################################
 #import Main.Baytes:check_pf
 
 #=objective = objectiveᵖᶠ
@@ -58,7 +72,7 @@ function check_pf(
             end
             if exact
                 objective_temp = Objective(model_temp, objective.data, objective.tagged)
-                _, loglik_exact[idx][iter] = filter_forward(objective_temp; dmax=dmax)
+                _, loglik_exact[idx][iter] = filter_forward(objective_temp)
             end
         end
     end
@@ -95,4 +109,4 @@ end
 
 ################################################################################
 #export
-export check_pf
+export check_pf, filter_forward
