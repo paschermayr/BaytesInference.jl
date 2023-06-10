@@ -10,7 +10,7 @@ using BaytesCore, BaytesMCMC, BaytesFilters, BaytesPMCMC, BaytesSMC, Baytes
 using DocStringExtensions:
     DocStringExtensions, TYPEDEF, TYPEDFIELDS, FIELDS, SIGNATURES, FUNCTIONNAME
 using ArgCheck: ArgCheck, @argcheck
-using UnPack: UnPack, @unpack, @pack!
+using SimpleUnPack: SimpleUnPack, @unpack, @pack!
 using Random: Random, AbstractRNG, GLOBAL_RNG, randexp
 using Statistics: Statistics, mean, std, sqrt, quantile, var
 using ProgressMeter
