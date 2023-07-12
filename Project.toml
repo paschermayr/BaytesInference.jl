@@ -1,7 +1,7 @@
 name = "BaytesInference"
 uuid = "4ed8d1ce-aa1e-45bc-907d-4d37aaa2bb0b"
 authors = ["Patrick Aschermayr <p.aschermayr@gmail.com>"]
-version = "0.2.3"
+version = "0.2.4"
 
 [deps]
 ArgCheck = "dce04be8-c92d-5529-be00-80e4d2c0e197"
@@ -32,7 +32,7 @@ BaytesSMC = "0.3"
 Distributions = "0.24, 0.25"
 DocStringExtensions = "0.8, 0.9"
 KernelDensity = "0.6"
-ModelWrappers = "0.4"
+ModelWrappers = "0.5"
 Plots = "1.38"
 ProgressMeter = "1.7"
 SimpleUnPack = "1"

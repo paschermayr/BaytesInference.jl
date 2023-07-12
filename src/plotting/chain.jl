@@ -102,8 +102,8 @@ function plotChain(
     _range = [(_sz[i] - _lengths[i] + 1):_sz[i] for i in eachindex(_sz)]
 
     N = length(trace.val[begin]) - burnin
-    post_mean = zeros(Float64, length(tagged), N)
-    CI = Matrix{Tuple{Float64,Float64}}(undef, length(tagged), N)
+    post_mean = zeros(Float64, length_constrained(tagged), N)
+    CI = Matrix{Tuple{Float64,Float64}}(undef, length_constrained(tagged), N)
 
     for iter in Base.OneTo(N)
         θᵗᵉᵐᵖ = flatten_index(trace, tagged, iter + burnin, flattenparam) #get_chain(trace.val[iter+burnin], tagged)

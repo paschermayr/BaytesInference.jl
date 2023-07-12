@@ -12,7 +12,7 @@ function plotChains(
     trace::Trace{C,A,B},
     transform::TraceTransform;
     model=false,                          # If model <: AbstractModel given, plots true parameter
-    layout = length(transform.tagged),
+    layout = length_constrained(transform.tagged),
     plotsize=plot_default_size,
     param_color=plot_default_color,
     fontsize=_fontsize,
@@ -20,7 +20,7 @@ function plotChains(
 ) where {C,A,B}
     ## Plot default
     plot_chains = plot(;
-        layout= layout, #(length(transform.tagged), 1),
+        layout= layout, #(length_constrained(transform.tagged), 1),
         foreground_color_legend = :transparent,
         background_color_legend = :transparent,
         size=plotsize,
