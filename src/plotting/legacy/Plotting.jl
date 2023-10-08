@@ -1,12 +1,12 @@
 "Plotting functions for Baytes"
 ################################################################################
 #Import
-include("chains.jl")
-include("histograms.jl")
-include("predictions.jl")
+include("utility.jl")
 
-#Legacy code
-include("legacy/Plotting.jl")
+include("diagnostics.jl")
+include("chain.jl")
+include("latent.jl")
+include("posteriorprediction.jl")
 
 #include("priorprediction.jl")
 #include("credibleinterval.jl")

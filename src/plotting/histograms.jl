@@ -8,7 +8,8 @@ Plot samples of trace on individual subplots.
 ```
 
 """
-function plotChains(
+################################################################################
+function plotHistograms(
     trace::Trace{C,A,B},
     transform::TraceTransform;
     model=false,                          # If model <: AbstractModel given, plots true parameter
@@ -19,7 +20,7 @@ function plotChains(
     axissize=_axissize,
 ) where {C,A,B}
     ## Plot default
-    plot_chains = plot(;
+    plot_histograms = plot(;
         layout= layout, #(length_constrained(transform.tagged), 1),
         foreground_color_legend = :transparent,
         background_color_legend = :transparent,
@@ -43,7 +44,7 @@ function plotChains(
     end
     ## Plot
     for iter in eachindex(_names)
-        plot!(view(_vals, :, :, iter),
+        histogram!(view(_vals, :, :, iter),
             label = false,
             ylabel = _names[iter],
             palette = Plots.palette(param_color, _Nchains),
@@ -51,19 +52,20 @@ function plotChains(
         )
         ## If defined, plot true parameter as vline
         if model != false
-            Plots.hline!(
+            Plots.vline!(
                 [θ_true[iter]];
                 label = false,
                 ylabel = _names[iter],
                 linestyle=:dot,
+                linewidth=3,
                 color = "black", #palette = Plots.palette(param_color, _Nchains),
                 subplot=iter,
             )
         end
     end
-    return plot_chains
+    return plot_histograms
 end
 
 ################################################################################
 #export
-export plotChains
+export plotHistograms
