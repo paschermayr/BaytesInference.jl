@@ -28,7 +28,7 @@ function plotPredictions(
     #Still contains t+1 predictions at t
     predictions = [trace.diagnostics[chain].base.prediction for chain in eachindex(trace.diagnostics)]
     data_real = data[end-length(predictions)+1:end]
-    x_iter_real = dates == false ? collect(1:length(data))[end-length(predictions)+1:end] : dates
+    x_iter_real = dates == false ? collect(1:length(data))[end-length(predictions)+1:end] : dates[end-length(predictions)+1:end]
     ArgCheck.@argcheck length(x_iter_real) == length(data_real) == length(predictions)
 
     #Remove burnin
