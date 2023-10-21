@@ -8,12 +8,13 @@ Plot samples of trace on individual subplots.
 ```
 
 """
-function plotChains(
+function plotCredibleInterval(
     trace::Trace{C,A,B},
     transform::TraceTransform;
     model=false,                            # If model <: AbstractModel given, plots true parameter
     dates = false,
     paramnames = transform.paramnames,          # Get Model names
+    CIRegion = [0.025, 0.975], 
     layout = length_constrained(transform.tagged),
     plotsize=plot_default_size,
     param_color=plot_default_color,
@@ -43,7 +44,6 @@ function plotChains(
     @argcheck length(paramnames) == _Nparam "Number of Parameter subset and Parameter Names do not match"
     @argcheck length(xiter) == _Niter "Dates has different index than chain"
 
-
     ## if model there, obtain true parameter
     if model != false
         θ_true = flatten(model, transform.tagged)
@@ -51,10 +51,33 @@ function plotChains(
     end
     ## Plot
     for iter in eachindex(paramnames)
-        plot!(xiter, view(_vals, :, :, iter),
-            label = false,
-            ylabel = paramnames[iter],
-            palette = Plots.palette(param_color, _Nchains),
+        # Obtain All samples for current parameter
+        θₜₑₘₚ = view(_vals, :, :, iter)
+        # Compute Posterior Mean and Credible Interval
+        post_mean = mean(θₜₑₘₚ, dims=2)
+        CI = Vector{Tuple{Float64,Float64}}(undef, Niter)
+        for idx in eachindex(CI)
+            θᵢ = θₜₑₘₚ[idx, :] 
+            CI[idx] = (
+                abs.(quantile(θᵢ, CIRegion[1]) - post_mean[idx]),
+                abs.(quantile(θᵢ, CIRegion[2]) - post_mean[idx]),
+            )
+        end
+        ## Plot Credible Interval
+        Plots.plot!(xiter, post_mean;## Posterior Mean
+            shape=:o,
+            markerstrokewidth=0.1,
+            markersize=2,
+            ylabel= paramnames[iter],
+            label=false, #string("Posterior Mean, CI: (", CIRegion[1],", ", CIRegion[2], ")"),
+            color="black", #"gold4", #Plots.palette(param_color, (NTrajectories+1) )[state],
+            ## CI
+            #!NOTE: Internally Matrices just viewed as vector of vectors in row major order, so can just unroll Matrix CI Tuples as Tuple of individual vectors
+            ribbon=(
+                ( getfield.(CI, 1), getfield.(CI, 2) )
+            ),
+            fillcolor="gold4", #Plots.palette(param_color, (NTrajectories+1) )[state],
+            fillalpha=0.25,
             subplot = iter,
         )
         ## If defined, plot true parameter as vline
@@ -74,4 +97,4 @@ end
 
 ################################################################################
 #export
-export plotChains
+export plotCredibleInterval

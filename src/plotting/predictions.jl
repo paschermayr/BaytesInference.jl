@@ -15,7 +15,7 @@ function plotPredictions(
     transform::TraceTransform,
     data::AbstractArray;
 #    model=false,                          # If model <: AbstractModel given, plots true parameter
-    burnin = 0 ,
+#    burnin = 0 ,
     CIRegion=[0.025, 0.975],
     dates = false,
 #    layout = length_constrained(transform.tagged),
@@ -24,6 +24,10 @@ function plotPredictions(
     fontsize=_fontsize,
     axissize=_axissize,
 ) where {C,A,B}
+
+
+    # Assign hyperparameter from transform
+    burnin = transform.burnin
 
     #Still contains t+1 predictions at t
     predictions = [trace.diagnostics[chain].base.prediction for chain in eachindex(trace.diagnostics)]
