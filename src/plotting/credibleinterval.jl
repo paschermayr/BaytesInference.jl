@@ -39,8 +39,11 @@ function plotCredibleInterval(
     _Niter = size(_vals, 1)
     _Nchains = size(_vals, 2)
     _Nparam = size(_vals, 3)
+    burnin = transform.burnin
+    maxiterations = transform.maxiterations
 
-    xiter = dates == false ? collect(1:_Niter) : dates
+    # Obtain X scale and check for matching indices
+    xiter = dates == false ? collect(1:maxiterations)[(burnin+1):end] : dates[(burnin+1):end]
     @argcheck length(paramnames) == _Nparam "Number of Parameter subset and Parameter Names do not match"
     @argcheck length(xiter) == _Niter "Dates has different index than chain"
 
@@ -55,7 +58,7 @@ function plotCredibleInterval(
         θₜₑₘₚ = view(_vals, :, :, iter)
         # Compute Posterior Mean and Credible Interval
         post_mean = mean(θₜₑₘₚ, dims=2)
-        CI = Vector{Tuple{Float64,Float64}}(undef, Niter)
+        CI = Vector{Tuple{Float64,Float64}}(undef, _Niter)
         for idx in eachindex(CI)
             θᵢ = θₜₑₘₚ[idx, :] 
             CI[idx] = (

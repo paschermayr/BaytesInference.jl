@@ -13,6 +13,8 @@ function plotHistograms(
     trace::Trace{C,A,B},
     transform::TraceTransform;
     model=false,                          # If model <: AbstractModel given, plots true parameter
+#    dates = false,
+    paramnames = transform.paramnames,          # Get Model names
     layout = length_constrained(transform.tagged),
     plotsize=plot_default_size,
     param_color=plot_default_color,
@@ -32,8 +34,6 @@ function plotHistograms(
         xtickfontsize=axissize,
         ytickfontsize=axissize,
     )
-    ## Get Model names
-    _names = transform.paramnames
     ## Get Trace Values
     _vals = trace_to_3DArray(trace, transform)
     _Nchains = size(_vals, 2)
@@ -43,10 +43,10 @@ function plotHistograms(
         @argcheck length(θ_true) == size(_vals, 3)
     end
     ## Plot
-    for iter in eachindex(_names)
+    for iter in eachindex(paramnames)
         histogram!(view(_vals, :, :, iter),
             label = false,
-            ylabel = _names[iter],
+            ylabel = paramnames[iter],
             palette = Plots.palette(param_color, _Nchains),
             subplot = iter,
         )
@@ -55,7 +55,7 @@ function plotHistograms(
             Plots.vline!(
                 [θ_true[iter]];
                 label = false,
-                ylabel = _names[iter],
+                ylabel = paramnames[iter],
                 linestyle=:dot,
                 linewidth=3,
                 color = "black", #palette = Plots.palette(param_color, _Nchains),

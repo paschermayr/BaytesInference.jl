@@ -1,7 +1,7 @@
 name = "BaytesInference"
 uuid = "4ed8d1ce-aa1e-45bc-907d-4d37aaa2bb0b"
 authors = ["Patrick Aschermayr <p.aschermayr@gmail.com>"]
-version = "0.2.7"
+version = "0.2.8"
 
 [deps]
 ArgCheck = "dce04be8-c92d-5529-be00-80e4d2c0e197"
