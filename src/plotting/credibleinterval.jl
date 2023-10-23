@@ -43,7 +43,7 @@ function plotCredibleInterval(
     maxiterations = transform.maxiterations
 
     # Obtain X scale and check for matching indices
-    xiter = dates == false ? collect(1:maxiterations)[(burnin+1):end] : dates[(burnin+1):end]
+    xiter = dates == false ? collect(1:maxiterations)[(burnin+1):end] : dates[end-_Niter+1:end]
     @argcheck length(paramnames) == _Nparam "Number of Parameter subset and Parameter Names do not match"
     @argcheck length(xiter) == _Niter "Dates has different index than chain"
 

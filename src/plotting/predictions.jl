@@ -104,7 +104,7 @@ function plotPredictions(
         Plots.plot!(
             x_iter_burnin_shifted, #xiter[end-Niter+1:end],
             data_real_burnin_shifted, #[start_date:end, datadim];
-            linewidth=0.5,
+            linewidth=1.0,
             label="Sample data",
             color="black", #linestyle=:dot,
             subplot=datadim,
