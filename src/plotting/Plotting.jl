@@ -5,6 +5,7 @@ include("chains.jl")
 include("histograms.jl")
 include("predictions.jl")
 include("credibleinterval.jl")
+include("diagnostics.jl")
 
 #Legacy code
 include("legacy/Plotting.jl")

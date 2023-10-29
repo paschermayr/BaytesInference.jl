@@ -8,12 +8,12 @@ Plot diagnostics of trace.
 ```
 
 """
-function plotDiagnostics(diagnostics)
-    return println("plotDiagnostics not available for diagnostics choice")
+function _plotDiagnostics(diagnostics)
+    return println("_plotDiagnostics not available for diagnostics choice")
 end
 
 ################################################################################
-function plotDiagnostics(
+function _plotDiagnostics(
     diagnostics::Vector{Vector{DiagnosticsNUTS}};
     plotsize=plot_default_size,
     param_color=plot_default_color,
@@ -77,7 +77,7 @@ function plotDiagnostics(
     )
     return plot_diagnostics
 end
-function plotDiagnostics(
+function _plotDiagnostics(
     diagnostics::Vector{Vector{DiagnosticsHMC}};
     plotsize=plot_default_size,
     param_color=plot_default_color,
@@ -120,7 +120,7 @@ function plotDiagnostics(
 
     return plot_diagnostics
 end
-function plotDiagnostics(
+function _plotDiagnostics(
     diagnostics::Vector{Vector{D}};
     plotsize=plot_default_size,
     param_color=plot_default_color,
@@ -153,7 +153,7 @@ function plotDiagnostics(
     return plot_diagnostics
 end
 
-function plotDiagnostics(
+function _plotDiagnostics(
     diagnosticsᵛ::Vector{Vector{M}},
     mcmc::MCMC;
     plotsize=plot_default_size,
@@ -203,7 +203,7 @@ function plotDiagnostics(
         subplot=2,
     )
     ## Plot sampler specific diagnostics
-    plot_sampler_diagnostics = plotDiagnostics([
+    plot_sampler_diagnostics = _plotDiagnostics([
         [diagnosticsᵛ[chain][iter].kernel for iter in eachindex(diagnosticsᵛ[chain])] for
         chain in eachindex(diagnosticsᵛ)
     ])
@@ -217,7 +217,7 @@ function plotDiagnostics(
 end
 
 ################################################################################
-function plotDiagnostics(
+function _plotDiagnostics(
     diagnosticsᵛ::Vector{Vector{M}},
     pf::ParticleFilter;
     plotsize=plot_default_size,
@@ -264,7 +264,7 @@ function plotDiagnostics(
     =#
 end
 #=
-function plotDiagnostics(
+function _plotDiagnostics(
     diagnosticsᵛ::Vector{Vector{M}},
     pmcmc::PMCMC;
     plotsize=plot_default_size,
@@ -272,7 +272,7 @@ function plotDiagnostics(
     fontsize=_fontsize,
     axissize=_axissize,
 ) where {M<:PMCMCDiagnostics}
-    mcmc_plot = plotDiagnostics(
+    mcmc_plot = _plotDiagnostics(
         _get_sampler_diagnostics(diagnosticsᵛ, pmcmc),
         pmcmc.kernel.mcmc;
         plotsize=plotsize,
@@ -280,7 +280,7 @@ function plotDiagnostics(
         fontsize=fontsize,
         axissize=axissize,
     )
-    pf_plot = plotDiagnostics(
+    pf_plot = _plotDiagnostics(
         _get_sampler_diagnostics(diagnosticsᵛ, pmcmc.kernel.pf),
         pmcmc.kernel.pf;
         plotsize=plotsize,
@@ -293,7 +293,7 @@ end
 =#
 ################################################################################
 
-function plotDiagnostics(
+function _plotDiagnostics(
     diagnosticsᵛ::Vector{M},
     smc;
     _xaxis = false,
@@ -485,10 +485,10 @@ end
     return plot_diagnostics
 end
 
-function plotDiagnostics(trace::Trace, algorithm; kwargs...)
-    return plotDiagnostics(trace.diagnostics, algorithm; kwargs...)
+function _plotDiagnostics(trace::Trace, algorithm; kwargs...)
+    return _plotDiagnostics(trace.diagnostics, algorithm; kwargs...)
 end
 
 ################################################################################
 #export
-export plotDiagnostics
+export _plotDiagnostics

@@ -9,28 +9,49 @@ Plot samples of trace on individual subplots.
 
 """
 ################################################################################
-# only implemented for univariate data so far
+# only implemented for univariate data and within SMC so far
 function plotPredictions(
     trace::Trace{C,A,B},
     transform::TraceTransform,
     data::AbstractArray;
-#    model=false,                          # If model <: AbstractModel given, plots true parameter
-#    burnin = 0 ,
     CIRegion=[0.025, 0.975],
     dates = false,
 #    layout = length_constrained(transform.tagged),
     plotsize=plot_default_size,
-#    param_color=plot_default_color,
     fontsize=_fontsize,
     axissize=_axissize,
 ) where {C,A,B}
+    return plotPredictions(
+        trace.diagnostics,
+        transform,
+        data;
+        CIRegion = CIRegion,
+        dates = dates,
+    #    layout = length_constrained(transform.tagged),
+        plotsize = plotsize,
+        fontsize = fontsize,
+        axissize = axissize,
+    )
+end
 
+# Make a function for plotPrediction(Trace) that dispatches to trace.diagnostics
+function plotPredictions(
+    diagnostics::Vector{<:SMCDiagnostics},
+    transform::TraceTransform,
+    data::AbstractArray;
+    CIRegion=[0.025, 0.975],
+    dates = false,
+#    layout = length_constrained(transform.tagged),
+    plotsize=plot_default_size,
+    fontsize=_fontsize,
+    axissize=_axissize,
+)
 
     # Assign hyperparameter from transform
     burnin = transform.burnin
 
     #Still contains t+1 predictions at t
-    predictions = [trace.diagnostics[chain].base.prediction for chain in eachindex(trace.diagnostics)]
+    predictions = [diagnostics[chain].base.prediction for chain in eachindex(diagnostics)]
     data_real = data[end-length(predictions)+1:end]
     x_iter_real = dates == false ? collect(1:length(data))[end-length(predictions)+1:end] : dates[end-length(predictions)+1:end]
     ArgCheck.@argcheck length(x_iter_real) == length(data_real) == length(predictions)
